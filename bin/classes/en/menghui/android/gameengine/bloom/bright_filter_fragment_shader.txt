@@ -1,0 +1,9 @@
+varying vec2 textureCoords;
+
+uniform sampler2D colourTexture;
+
+void main(void) {
+    vec4 colour = texture2D(colourTexture, textureCoords);
+    float brightness = (colour.r * 0.2126) + (colour.g * 0.7152) + (colour.b * 0.0722);
+    gl_FragColor = colour * brightness;
+}

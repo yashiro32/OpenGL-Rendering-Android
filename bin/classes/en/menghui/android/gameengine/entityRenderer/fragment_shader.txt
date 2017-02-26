@@ -1,0 +1,21 @@
+varying vec2 pass_textureCoordinates;
+varying vec3 pass_normal;
+varying vec3 reflectedVector;
+varying vec3 refractedVector;
+
+uniform sampler2D modelTexture;
+uniform samplerCube enviroMap;
+
+const vec3 lightDirection = normalize(vec3(0.2, -1.0, 0.3));
+const float ambient = 0.3;
+
+void main(void){
+	float brightness = max(dot(-lightDirection, normalize(pass_normal)), 0.0) + ambient;
+	gl_FragColor = texture2D(modelTexture, pass_textureCoordinates) * brightness;
+	
+	vec4 reflectedColour = texture2D(enviroMap, reflectedVector);
+	vec4 refractedColour = texture2D(enviroMap, refractedVector);
+	vec4 enviroColour = mix(reflectedColour, refractedColour, 0.5);
+	
+	gl_FragColor = mix(gl_FragColor, enviroColour, 0.8);
+}

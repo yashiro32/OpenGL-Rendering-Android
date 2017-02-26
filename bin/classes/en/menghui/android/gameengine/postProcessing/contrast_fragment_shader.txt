@@ -1,0 +1,10 @@
+varying vec2 textureCoords;
+
+uniform sampler2D colourTexture;
+
+const float contrast = 0.3;
+
+void main(void) {
+    gl_FragColor = texture2D(colourTexture, textureCoords);
+    gl_FragColor.rgb = (gl_FragColor.rgb - 0.5) * (1.0 + contrast) + 0.5;
+}

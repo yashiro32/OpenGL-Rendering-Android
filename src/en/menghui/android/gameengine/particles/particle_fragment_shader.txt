@@ -1,0 +1,12 @@
+varying vec2 textureCoords1;
+varying vec2 textureCoords2;
+varying float blend;
+
+uniform sampler2D particleTexture;
+
+void main(void) {
+    vec4 colour1 = texture2D(particleTexture, textureCoords1);
+    vec4 colour2 = texture2D(particleTexture, textureCoords2);
+
+    gl_FragColor = mix(colour1, colour2, blend);
+}

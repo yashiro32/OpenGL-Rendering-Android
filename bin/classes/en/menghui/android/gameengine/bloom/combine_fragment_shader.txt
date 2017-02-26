@@ -1,0 +1,10 @@
+varying vec2 textureCoords;
+
+uniform sampler2D colourTexture;
+uniform sampler2D highlightTexture;
+
+void main(void) {
+    vec4 sceneColour = texture2D(colourTexture, textureCoords);
+    vec4 highlightColour = texture2D(highlightTexture, textureCoords);
+    gl_FragColor = sceneColour + highlightColour;
+}

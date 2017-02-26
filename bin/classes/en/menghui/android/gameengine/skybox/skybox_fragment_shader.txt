@@ -1,0 +1,19 @@
+varying vec3 textureCoords;
+
+uniform samplerCube cubeMap;
+uniform samplerCube cubeMap2;
+uniform float blendFactor;
+uniform vec3 fogColour;
+
+const float lowerLimit = 0.0;
+const float upperLimit = 30.0;
+
+void main(void) {
+    vec4 texture1 = textureCube(cubeMap, textureCoords);
+    vec4 texture2 = textureCube(cubeMap2, textureCoords);
+    vec4 finalColour = mix(texture1, texture2, blendFactor);
+    
+    float factor = (textureCoords.y - lowerLimit) / (upperLimit - lowerLimit);
+    factor = clamp(factor, 0.0, 1.0);
+    gl_FragColor = mix(vec4(fogColour, 1.0), finalColour, factor);
+}

@@ -1,0 +1,5 @@
+varying vec3 finalColour;
+
+void main(void){
+    gl_FragColor = vec4(finalColour, 1.0);
+}

@@ -1,0 +1,19 @@
+varying vec2 textureCoords;
+
+uniform sampler2D originalTexture;
+
+uniform float targetWidth;
+uniform float targetHeight;
+uniform float shift;
+
+void main(void) {
+    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+    float shiftHorz = (1.0 / targetWidth) * shift;
+    if (textureCoords.x >= shiftHorz) {
+        gl_FragColor.r = texture2D(originalTexture, textureCoords).r;
+        gl_FragColor.g = texture2D(originalTexture, vec2(textureCoords.x-shiftHorz, textureCoords.y)).g;
+        gl_FragColor.b = texture2D(originalTexture, vec2(textureCoords.x-shiftHorz, textureCoords.y)).b;
+    }
+    
+    
+}

@@ -1,0 +1,26 @@
+attribute vec3 position;
+attribute vec2 textureCoordinates;
+attribute vec3 normal;
+
+varying vec3 pass_normal;
+varying vec2 pass_textureCoordinates;
+varying vec3 reflectedVector;
+varying vec3 refractedVector;
+
+uniform mat4 transformationMatrix;
+uniform mat4 projectionMatrix;
+uniform mat4 viewMatrix;
+uniform vec3 cameraPosition;
+
+void main(void){
+    vec4 worldPosition = transformationMatrix * vec4(position, 1.0);
+	gl_Position = projectionMatrix * viewMatrix * worldPosition;
+	
+	pass_textureCoordinates = textureCoordinates;
+	pass_normal = normal;
+	vec3 unitNormal = normalize(normal);
+	
+	vec3 viewVector = normalize(worldPosition.xyz - cameraPosition);
+	reflectedVector = reflect(viewVector, unitNormal);
+	refractedVector = refract(viewVector, unitNormal, 1.0/1.1);
+}

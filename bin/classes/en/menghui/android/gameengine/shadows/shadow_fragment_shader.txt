@@ -1,0 +1,12 @@
+varying vec2 textureCoords;
+
+uniform sampler2D modelTexture; // Will use this next week
+
+void main(void) {
+    float alpha = texture2D(modelTexture, textureCoords).a;
+    if (alpha < 0.5) {
+        discard;
+    }
+    
+    gl_FragColor = vec4(1.0);
+}
